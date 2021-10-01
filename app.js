@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 var jitsiUrl = "https://meet.jit.si/jameswick"
 var displayName = "JamesBot_" + getRandomUsernamePostfix();
 
-var ttl = 20000 ; //How long (ms) before we kill off the video - otherwise it will loop
+var ttl = 60000 ; //How long (ms) before we kill off the video - otherwise it will loop
 var videoFile = "bbb_480p.y4m" //See readme for details on Y4M conversions
 var audioFile = "bbb_480p.wav" //Must be a .wav. Not sure of other constraints
 
@@ -15,7 +15,7 @@ async function main(){
   if (process.argv.length > 2) {
     if (process.argv[2] == '-h' | process.argv[2] == '--help') {
       console.log('node app.js [FILENAME NO POSTFIX] [PLAYTIME (sec)] [JITSI URL+ROOM]');
-      console.log('filename default bbb_480p; playtime default 20; url default https://meet.jit.si/jameswick');
+      console.log('filename default bbb_480p; playtime default 60; url default https://meet.jit.si/jameswick');
       return;
     }
     videoFile = "media/" + process.argv[2] + ".y4m";
@@ -35,12 +35,12 @@ async function main(){
 
   const meetArgs = [
       // Disable receiving of video
-      'config.channelLastN=0',
-      'config.constraints.video.height.min=120',
+      //'config.channelLastN=0',
+      //'config.constraints.video.height.min=120',
       // Turn off some bits of audio processing and unmute
       'config.disableAP=true', 'config.disableHPF=true&config.diableNS=true&config.disableAGC=true', 'config.startWithAudioMuted=false',
       // Don't use simulcast to save resources on the sender (our) side
-      'config.disableSimulcast=true',
+      //'config.disableSimulcast=true',
       // No need to process audio levels
       'config.disableAudioLevels=true',
       // Disable P2P mode
@@ -48,9 +48,9 @@ async function main(){
       //Skip prejoin page
       'config.prejoinPageEnabled=false',
       //Disable playing of other videos - Remember to turn this off if you use this to do screenshots!
-      'config.testing.noAutoPlayVideo',
+      //'config.testing.noAutoPlayVideo',
       //Set local video resolution low to save cpu
-      'config.resolution=120',
+      //'config.resolution=120',
       //only show filmstrip
       'interfaceConfig.filmStripOnly=true',
 
