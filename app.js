@@ -1,7 +1,6 @@
 const puppeteer = require('puppeteer');
 
-var jitsiBaseUrl = "https://meet.jit.si/"
-var conferenceRoomName = "parabellum" //e.g. room1
+var jitsiUrl = "https://meet.jit.si/jameswick"
 var displayName = "JamesBot_" + getRandomUsernamePostfix();
 
 var ttl = 20000 ; //How long (ms) before we kill off the video - otherwise it will loop
@@ -14,16 +13,25 @@ function getRandomUsernamePostfix() {
 
 async function main(){
   if (process.argv.length > 2) {
+    if (process.argv[2] == '-h' | process.argv[2] == '--help') {
+      console.log('node app.js [FILENAME NO POSTFIX] [PLAYTIME (sec)] [JITSI URL+ROOM]');
+      console.log('filename default bbb_480p; playtime default 20; url default https://meet.jit.si/jameswick');
+      return;
+    }
     videoFile = "media/" + process.argv[2] + ".y4m";
     audioFile = "media/" + process.argv[2] + ".wav";
   }
   if (process.argv.length > 3) {
     ttl = parseInt(process.argv[3]) * 1000;
   }
+  if (process.argv.length > 4) {
+    jitsiUrl = process.argv[4];
+  }
 
   console.log(process.argv);
-  console.log("using video " + videoFile + ", audio " + audioFile);
-  console.log("using timeout " + ttl/1000 + " seconds");
+  console.log("using video: " + videoFile + ", audio: " + audioFile);
+  console.log("using timeout: " + ttl/1000 + " seconds");
+  console.log("using url: " + jitsiUrl);
 
   const meetArgs = [
       // Disable receiving of video
@@ -77,7 +85,7 @@ async function main(){
 
   //Navigate to the conference
   console.log('Joining Conference...');
-  const url = `${jitsiBaseUrl}/${conferenceRoomName}#${meetArgs.join('&')}&userInfo.displayName=%22${displayName}%22`;
+  const url = `${jitsiUrl}#${meetArgs.join('&')}&userInfo.displayName=%22${displayName}%22`;
   page.goto(url)
 
 
