@@ -1,7 +1,9 @@
 # jitsi-puppeteer-basic
 A forked, altered version of the Jitsi Puppeteer implementation at <https://github.com/L-wo/jitsi-puppeteer-basic>
 
-This version is dockerised and designed to be scalable. The parameters used take from the environment and default values are found in `.env`.
+This version is dockerised and designed to be scalable. The parameters used take from the environment and default values are found in the `.env` file.
+
+You can access the Docker image at <https://hub.docker.com/r/jameswickenden/jitsi-puppet-video/tags>.
 
 ## Installation
 
