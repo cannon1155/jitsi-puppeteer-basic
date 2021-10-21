@@ -1,7 +1,7 @@
 # jitsi-puppeteer-basic
-A basic version of my Jitsi Puppeteer implementation
+A forked, altered version of the Jitsi Puppeteer implementation at <https://github.com/L-wo/jitsi-puppeteer-basic>
 
-*THIS CODE IS UNTESTED AND HAS BEEN PRODUCED FOR DEMO PURPOSES ONLY. IT PROBABLY WILL NOT WORK STRAIGHT OUT OF THE BOX*
+This version is dockerised and designed to be scalable. The parameters used take from the environment and default values are found in `.env`.
 
 ## Installation
 
@@ -23,20 +23,15 @@ To run the code, fill in the blanks within app.js and then use
 
     npm run start
 
-You will not be able to use the bots on a secure domain server, or to join a server that uses waiting rooms or has a password on a room. I have found ways to enable these behaviours but that is beyond the scope of this demonstration.
-
 ## Video Conversion
 
 To convert videos in MP4 format to Y4M and WAV:
-  
-    ffmpeg -i "test.mp4" -pix_fmt yuv420p -vf scale=320:180 -r 15 -map "0:v" "test.y4m"
-    ffmpeg -i "test.mp4" -af asetrate=48000,aresample=48000 "test.wav"
 
-Results varied depending on input MP4, but these parameters will convert anything downloaded from Vimeo nicely.
+    python3 mp4_splitter_ffmpeg.py [filename w/o extension]
 
 ===========
 
-Copyright 2021 L-Wo 
+Copyright 2021 L-Wo
 
 Permission to use, copy, modify, and/or distribute this software for any purpose with or without fee is hereby granted, provided that the above copyright notice and this permission notice appear in all copies.
 
