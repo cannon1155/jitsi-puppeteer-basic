@@ -54,12 +54,6 @@ RUN npm install --production
 # installs node dependencies
 
 COPY . .
-
-COPY ["surfing.mp4", "media/surfing.mp4"]
-RUN python3 mp4_splitter_ffmpeg.py surfing
-# creates the video and audio files the client needs from am mp4
-
-COPY  . .
 # moves files into image
 
 CMD [ "npm", "run", "start" ]

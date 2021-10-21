@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
+const { exec } = require("child_process");
 
 var displayName = "JamesBot_" + getRandomUsernamePostfix();
 
@@ -7,22 +8,57 @@ var ttl ;      // How long (ms) before we kill off the video - otherwise it will
 var videoFile; // See readme for details on Y4M conversions
 var audioFile; // Must be a .wav. Not sure of other constraints
 var jitsiUrl;  // Jitsi meet URL with room postfix
+var completed_conversions = []
 
 function getRandomUsernamePostfix() {
   return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
-}
+};
+
+function convert_mp4(media_type) {
+  console.log(media_type + " converting file " + process.env.FILE + ".mp4...");
+  filename = process.env.FILE;
+  if (media_type == 'VIDEO') {
+    exec('ffmpeg -i \"media/' + filename + '.mp4\" -pix_fmt yuv420p -map \"0:v\" \"media/' + filename + '.y4m\"',
+    function(err, stdout) {
+               handle_conversion_result(err, media_type);
+           });
+  }
+  else if (media_type == "AUDIO") {
+    exec('ffmpeg -i \"media/' + filename + '.mp4\" -af asetrate=48000,aresample=48000 \"media/' + filename + '.wav\"',
+    function(err, stdout) {
+               handle_conversion_result(err, media_type);
+           });
+  }
+};
+
+async function handle_conversion_result(err, media_type) {
+  if (err) console.log(`error: ${err.message}`);
+  completed_conversions.push(media_type);
+  if (completed_conversions.length >= 2) {
+    console.log("Converting done.")
+    connect_and_play();
+  }
+};
 
 async function main(){
   if (process.env.HELP == 'true') {
-      console.log('node app.js [FILENAME NO POSTFIX] [PLAYTIME (sec)] [JITSI URL+ROOM]');
-      console.log('filename default bbb_480p; playtime default 60; url default https://meet.jit.si/jameswick');
+    console.log('=== ENV vars ===');
+    console.log('FILENAME : mp4 filname no file extension!\n  default: surfing');
+    console.log('PLAYTIME : how long the client stays in the call, in seconds\n  default: 30');
+    console.log('URL      : the jitsi meet url and room\n  default: https://meet.jit.si/jameswick');
+    return;
   }
-  else {
-    videoFile = "media/" + process.env.FILE + ".y4m";
-    audioFile = "media/" + process.env.FILE + ".wav";
-    ttl = parseInt(process.env.TIMEOUT) * 1000;
-    jitsiUrl = process.env.URL;
-  }
+
+  convert_mp4("VIDEO");
+  convert_mp4("AUDIO");
+}
+
+async function connect_and_play() {
+
+  videoFile = "media/" + process.env.FILE + ".y4m";
+  audioFile = "media/" + process.env.FILE + ".wav";
+  ttl = parseInt(process.env.TIMEOUT) * 1000;
+  jitsiUrl = process.env.URL;
 
   console.log(process.argv);
   console.log("using video: " + videoFile + ", audio: " + audioFile);
