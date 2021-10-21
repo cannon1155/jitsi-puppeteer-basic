@@ -1,32 +1,27 @@
 const puppeteer = require('puppeteer');
 require('dotenv').config();
 
-var jitsiUrl = "https://meet.jit.si/jameswick"
 var displayName = "JamesBot_" + getRandomUsernamePostfix();
 
-var ttl = 60000 ; //How long (ms) before we kill off the video - otherwise it will loop
-var videoFile = "bbb_480p.y4m" //See readme for details on Y4M conversions
-var audioFile = "bbb_480p.wav" //Must be a .wav. Not sure of other constraints
+var ttl ;      // How long (ms) before we kill off the video - otherwise it will loop
+var videoFile; // See readme for details on Y4M conversions
+var audioFile; // Must be a .wav. Not sure of other constraints
+var jitsiUrl;  // Jitsi meet URL with room postfix
 
 function getRandomUsernamePostfix() {
   return Math.random().toString(36).replace(/[^a-z]+/g, '').substr(0, 5);
 }
 
 async function main(){
-  if (process.argv.length > 2) {
-    if (process.argv[2] == '-h' | process.argv[2] == '--help') {
+  if (process.env.HELP == 'true') {
       console.log('node app.js [FILENAME NO POSTFIX] [PLAYTIME (sec)] [JITSI URL+ROOM]');
       console.log('filename default bbb_480p; playtime default 60; url default https://meet.jit.si/jameswick');
-      return;
-    }
-    videoFile = "media/" + process.argv[2] + ".y4m";
-    audioFile = "media/" + process.argv[2] + ".wav";
   }
-  if (process.argv.length > 3) {
-    ttl = parseInt(process.argv[3]) * 1000;
-  }
-  if (process.argv.length > 4) {
-    jitsiUrl = process.argv[4];
+  else {
+    videoFile = "media/" + process.env.FILE + ".y4m";
+    audioFile = "media/" + process.env.FILE + ".wav";
+    ttl = parseInt(process.env.TIMEOUT) * 1000;
+    jitsiUrl = process.env.URL;
   }
 
   console.log(process.argv);
@@ -53,8 +48,7 @@ async function main(){
       //Set local video resolution low to save cpu
       //'config.resolution=120',
       //only show filmstrip
-      'interfaceConfig.filmStripOnly=true',
-
+      'interfaceConfig.filmStripOnly=true'
   ];
 
   const chromeArgs = [
@@ -76,7 +70,7 @@ async function main(){
       '--use-fake-device-for-media-stream',
       '--use-file-for-fake-video-capture=' + videoFile,
       // Use a file as the audio device
-      '--use-file-for-fake-audio-capture=' + audioFile,
+      '--use-file-for-fake-audio-capture=' + audioFile
   ];
 
   //Init browser

@@ -4,7 +4,7 @@
   "description": "A basic version of my Jitsi Puppeteer solution",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js $FILE $TIMEOUT $URL"
+    "start": "node app.js"
   },
   "author": "L-Wo",
   "license": "ISC",
