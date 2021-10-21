@@ -4,12 +4,13 @@
   "description": "A basic version of my Jitsi Puppeteer solution",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js $FILE $TIMEOUT"
+    "start": "node app.js $FILE $TIMEOUT $URL"
   },
   "author": "L-Wo",
   "license": "ISC",
   "repository": "https://github.com/L-wo/jitsi-puppeteer-basic",
   "dependencies": {
+    "dotenv": "^10.0.0",
     "puppeteer": "^8.0.0"
   }
 }

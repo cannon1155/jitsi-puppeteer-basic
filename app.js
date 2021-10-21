@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+require('dotenv').config();
 
 var jitsiUrl = "https://meet.jit.si/jameswick"
 var displayName = "JamesBot_" + getRandomUsernamePostfix();
@@ -57,6 +58,7 @@ async function main(){
   ];
 
   const chromeArgs = [
+      '--disable-dev-shm-usage',
       // Disable sandboxing, gives an error on Linux
       '--no-sandbox',
       '--disable-setuid-sandbox',
