@@ -31,6 +31,8 @@ To convert videos in MP4 format to Y4M and WAV:
 
     python3 mp4_splitter_ffmpeg.py [filename w/o extension]
 
+(This is not needed; it is done inside the script)
+
 ===========
 
 Copyright 2021 L-Wo

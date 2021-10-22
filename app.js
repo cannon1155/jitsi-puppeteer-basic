@@ -43,14 +43,20 @@ async function handle_conversion_result(err, media_type) {
 async function main(){
   if (process.env.HELP == 'true') {
     console.log('=== ENV vars ===');
-    console.log('FILENAME : mp4 filname no file extension!\n  default: surfing');
-    console.log('PLAYTIME : how long the client stays in the call, in seconds\n  default: 30');
-    console.log('URL      : the jitsi meet url and room\n  default: https://meet.jit.si/jameswick');
+    console.log('FILENAME : mp4 filname no file extension!\n  default= surfing');
+    console.log('PLAYTIME : how long the client stays in the call, in seconds\n  default= 30');
+    console.log('URL      : the jitsi meet url and room\n  default= https://meet.jit.si/jameswick');
     return;
   }
 
-  convert_mp4("VIDEO");
-  convert_mp4("AUDIO");
+  if (process.env.CONVERT == 'true') {
+    convert_mp4("VIDEO");
+    convert_mp4("AUDIO");
+  }
+  else {
+    console.log("Skipping conversion.");
+    connect_and_play();
+  }
 }
 
 async function connect_and_play() {
