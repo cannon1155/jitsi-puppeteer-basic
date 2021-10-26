@@ -1,0 +1,4 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  jitsi-puppet-video:
+    image: jameswickenden/jitsi-puppet-video:6.0
