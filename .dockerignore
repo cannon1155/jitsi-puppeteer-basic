@@ -1,2 +1,3 @@
-*node_modules/*
-*media_old/*
+node_modules
+media_old
+.git

@@ -76,13 +76,15 @@ async function connect_and_play() {
       //'config.channelLastN=0',
       //'config.constraints.video.height.min=120',
       // Turn off some bits of audio processing and unmute
-      'config.disableAP=true', 'config.disableHPF=true&config.diableNS=true&config.disableAGC=true', 'config.startWithAudioMuted=false',
+      'config.disableAP=true',
+      'config.disableHPF=true&config.diableNS=true&config.disableAGC=true',
+      'config.startWithAudioMuted=false',
       // Don't use simulcast to save resources on the sender (our) side
       //'config.disableSimulcast=true',
       // No need to process audio levels
       'config.disableAudioLevels=true',
       // Disable P2P mode
-      'config.p2p.enabled=false',
+      //'config.p2p.enabled=false',
       //Skip prejoin page
       'config.prejoinPageEnabled=false',
       //Disable playing of other videos - Remember to turn this off if you use this to do screenshots!
@@ -90,24 +92,25 @@ async function connect_and_play() {
       //Set local video resolution low to save cpu
       //'config.resolution=120',
       //only show filmstrip
-      'interfaceConfig.filmStripOnly=true'
+      //'interfaceConfig.filmStripOnly=true'
   ];
 
   const chromeArgs = [
+      '--autoplay-policy=no-user-gesture-required',
       '--disable-dev-shm-usage',
       // Disable sandboxing, gives an error on Linux
-      '--no-sandbox',
-      '--disable-setuid-sandbox',
+      //'--no-sandbox',
+      //'--disable-setuid-sandbox',
       // Automatically give permission to use media devices
       '--use-fake-ui-for-media-stream',
       // Performance helping flags
-      '--disable-dev-shm-usage',
-      '--disable-accelerated-2d-canvas',
-      '--no-first-run',
-      '--no-zygote',
-      '--single-process',
-      '--disable-gpu',
-      '--window-size=400,300',
+      //'--disable-dev-shm-usage',
+      //'--disable-accelerated-2d-canvas',
+      //'--no-first-run',
+      //'--no-zygote',
+      //'--single-process',
+      //'--disable-gpu',
+      //'--window-size=400,300',
       '--disable-web-security',
       '--use-fake-device-for-media-stream',
       '--use-file-for-fake-video-capture=' + videoFile,
@@ -116,7 +119,10 @@ async function connect_and_play() {
   ];
 
   //Init browser
-  const browser = await puppeteer.launch({ args: chromeArgs, headless: true, ignoreHTTPSErrors: true });
+  const browser = await puppeteer.launch({ args: chromeArgs, headless: false, ignoreHTTPSErrors: true,
+    ignoreDefaultArgs: [
+         "--mute-audio"
+     ] });
 
   //Open new page
   const page = await browser.newPage();
