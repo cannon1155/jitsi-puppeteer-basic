@@ -3,7 +3,22 @@ services:
   jitsi-puppet-video:
     image: jameswickenden/jitsi-puppet-video:6.0
     environment:
-      - URL2=https://192.168.0.102/lan
-      - URL=https://meet.jit.si/jameswick
+      - URL=https://192.168.0.102/lan
+      - URL_DEFAULT=https://meet.jit.si/jameswick
       - TIMEOUT=3600
       - FILE=lipsum
+
+  jitsi-full:
+    image: jameswickenden/jitsi-puppet-video:7.1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    environment:
+      - DISPLAY=$DISPLAY
+      - URL=https://192.168.0.102/lan
+      - URL_DEFAULT=https://meet.jit.si/jameswick
+      - TIMEOUT=3600
+      - FILE=lipsum
+      - CONVERT=false
+      
+# docker-compose run --rm -v /tmp/.X11-unix:/tmp/.X11-unix jitsi-full
+# docker-compose up --scale jitsi-full=4

@@ -99,7 +99,7 @@ async function connect_and_play() {
       '--autoplay-policy=no-user-gesture-required',
       '--disable-dev-shm-usage',
       // Disable sandboxing, gives an error on Linux
-      //'--no-sandbox',
+      '--no-sandbox',
       //'--disable-setuid-sandbox',
       // Automatically give permission to use media devices
       '--use-fake-ui-for-media-stream',
@@ -107,7 +107,7 @@ async function connect_and_play() {
       //'--disable-dev-shm-usage',
       //'--disable-accelerated-2d-canvas',
       //'--no-first-run',
-      //'--no-zygote',
+      '--no-zygote',
       //'--single-process',
       //'--disable-gpu',
       //'--window-size=400,300',
@@ -119,7 +119,11 @@ async function connect_and_play() {
   ];
 
   //Init browser
-  const browser = await puppeteer.launch({ args: chromeArgs, headless: false, ignoreHTTPSErrors: true,
+  const browser = await puppeteer.launch({
+    args: chromeArgs,
+    headless: false,
+    ignoreHTTPSErrors: true,
+    executablePath: 'google-chrome-stable',
     ignoreDefaultArgs: [
          "--mute-audio"
      ] });
