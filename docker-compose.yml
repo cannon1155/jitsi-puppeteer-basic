@@ -19,6 +19,6 @@ services:
       - TIMEOUT=3600
       - FILE=lipsum
       - CONVERT=false
-      
+
 # docker-compose run --rm -v /tmp/.X11-unix:/tmp/.X11-unix jitsi-full
-# docker-compose up --scale jitsi-full=4
+# docker-compose up --scale jitsi-full=4 --scale jitsi-puppet-video=0
