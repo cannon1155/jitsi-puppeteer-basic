@@ -96,6 +96,7 @@ async function connect_and_play() {
   ];
 
   const chromeArgs = [
+      '--start-maximized',
       '--autoplay-policy=no-user-gesture-required',
       '--disable-dev-shm-usage',
       // Disable sandboxing, gives an error on Linux
@@ -130,6 +131,7 @@ async function connect_and_play() {
 
   //Open new page
   const page = await browser.newPage();
+  page.setViewport({ width: 1366, height: 768});
 
   //Navigate to the conference
   console.log('Joining Conference...');
