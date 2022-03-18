@@ -4,7 +4,7 @@ services:
     image: jameswickenden/jitsi-puppet-video:6.0
     environment:
       - URL=https://192.168.0.102/lan
-      - URL_DEFAULT=https://meet.jit.si/jameswick
+      - URL_DEFAULT=https://jitsitestservera.ddnsfree.com/many
       - TIMEOUT=3600
       - FILE=lipsum
 
@@ -15,7 +15,7 @@ services:
     environment:
       - DISPLAY=$DISPLAY
       - URL2=https://192.168.0.102/lan
-      - URL=https://meet.jit.si/jameswick
+      - URL=https://jitsitestservera.ddnsfree.com/many
       - TIMEOUT=3600
       - FILE=lipsum
       - CONVERT=false

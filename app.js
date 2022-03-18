@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 require('dotenv').config();
 const { exec } = require("child_process");
 
-var displayName = "JamesBot_" + getRandomUsernamePostfix();
+var displayName = "StefanBot_" + getRandomUsernamePostfix();
 
 var ttl ;      // How long (ms) before we kill off the video - otherwise it will loop
 var videoFile; // See readme for details on Y4M conversions
@@ -45,7 +45,7 @@ async function main(){
     console.log('=== ENV vars ===');
     console.log('FILENAME : mp4 filname no file extension!\n  default= surfing');
     console.log('PLAYTIME : how long the client stays in the call, in seconds\n  default= 30');
-    console.log('URL      : the jitsi meet url and room\n  default= https://meet.jit.si/jameswick');
+    console.log('URL      : the jitsi meet url and room\n  default= https://jitsitestservera.ddnsfree.com/many');
     return;
   }
 

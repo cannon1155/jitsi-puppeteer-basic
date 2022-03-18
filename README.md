@@ -34,7 +34,7 @@ Then, run this within the directory of the package:
 With docker-compose, you can scale up clients with the command:
 `docker-compose up --scale jitsi-puppet-video=0 --scale jitsi-full=x`
 
-To create x clients at https://meet.jit.si/jameswick
+To create x clients at https://jitsitestservera.ddnsfree.com/many
 
 Or with just docker, you can run `docker run jameswickenden/jitsi-puppet-video:6.0`
 
